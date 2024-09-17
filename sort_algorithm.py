@@ -41,6 +41,25 @@ def countingsort(arr):
 
     return output
 
+def combsort(arr):
+    n = len(arr)
+    gap = n
+    shrink = 1.3
+    sorted = False
+
+    while not sorted:
+        gap = int(gap // shrink)
+        if gap <= 1:
+            gap = 1
+            sorted = True
+
+        for i in range(n - gap):
+            if arr[i] > arr[i + gap]:
+                arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                sorted = False
+
+    return arr
+
 def gnomesort(arr):
     index = 0
     while index < len(arr):
@@ -157,6 +176,35 @@ def radixsort(arr):
         exp *= 10
     return arr
 
+def shakersort(arr):
+    n = len(arr)
+    swapped = True
+    start = 0
+    end = n - 1
+
+    while swapped:
+        swapped = False
+
+        for i in range(start, end):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+
+        if not swapped:
+            break
+
+        swapped = False
+        end -= 1
+
+        for i in range(end, start, -1):
+            if arr[i] < arr[i - 1]:
+                arr[i], arr[i - 1] = arr[i - 1], arr[i]
+                swapped = True
+
+        start += 1
+
+    return arr
+
 def shellsort(arr):
     n = len(arr)
     gap = n // 2
@@ -172,3 +220,6 @@ def shellsort(arr):
         gap //= 2 
 
     return arr
+
+arr = [8, 4, 1, 56, 3, -44, 23, -6, 28, 0]
+print(shakersort(arr))
